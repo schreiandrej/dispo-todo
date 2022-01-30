@@ -9,6 +9,7 @@
       "@/utils/*": ["src/utils/*"],
       "@/styles/*": ["src/styles/*"],
       "@/hooks/*": ["src/hooks/*"],
+      "@/lib/*": ["src/lib/*"],
       "@/layout/*": ["src/layout/*"]
     },
     "allowJs": true,
@@ -21,7 +22,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "incremental": true
   },
   "include": ["next-env.d.ts", "additional_type.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", ".next"]
