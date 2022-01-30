@@ -1,0 +1,20 @@
+/* buttons */
+.button-outlined {
+  @apply px-6 py-2 text-base font-semibold transition-colors duration-300 ease-in-out bg-transparent border rounded-md border-base;
+}
+
+.button-outlined:hover {
+  @apply text-hover border-hover;
+}
+
+.button-outlined:active {
+  @apply text-base bg-accent;
+}
+
+.button-outlined:focus {
+  @apply outline-none;
+}
+
+/* .button-filled {
+  @apply px-6 py-2 font-semibold transition-colors duration-300 ease-in-out border rounded-md bg-accent hover:bg-transparent text-inverted hover:text-hover border-base hover:border-hover active:bg-accent active:text-inverted focus:outline-none;
+} */

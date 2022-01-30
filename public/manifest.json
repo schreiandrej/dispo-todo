@@ -1,0 +1,10 @@
+{
+  "name": "next-app",
+  "short_name": "next-app",
+  "theme_color": "#000000",
+  "background_color": "#004740",
+  "display": "browser",
+  "description": "A next-js app.",
+  "start_url": ".",
+  "splash_pages": null
+}

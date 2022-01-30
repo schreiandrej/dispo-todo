@@ -1,0 +1,54 @@
+.dark {
+  /* background variables */
+  --color-background: hsla(27, 60%, 3%, 1);
+  --color-background-accent: hsla(27, 91%, 29%, 0.9);
+
+  /* heading variables*/
+  --color-heading-1: hsla(27, 100%, 61%, 1);
+  --color-heading-2: hsla(27, 80%, 61%, 0.9);
+  --color-heading-3: hsla(27, 60%, 61%, 0.8);
+  --color-heading-4: hsla(27, 40%, 61%, 0.7);
+
+  /* text variables */
+  --color-text-base: hsl(27, 0%, 98%);
+  --color-text-hover: hsl(27, 25%, 74%);
+  --color-text-accent: hsl(27, 42%, 54%);
+  --color-text-inverted: hsl(27, 60%, 3%);
+
+  /* border variables */
+  --color-border: hsl(27, 100%, 61%);
+  --color-border-active: hsla(27, 48%, 47%, 1);
+  --color-border-hover: hsla(27, 25%, 46%, 1);
+
+  /* ring variables */
+  --color-ring-active: hsl(27, 62%, 55%);
+  --color-ring-focus: hsl(27, 62%, 75%);
+  --color-ring-hover: hsl(27, 62%, 35%);
+}
+
+.light {
+  /* background variables */
+  --color-background: hsla(27, 60%, 3%, 1);
+  --color-background-accent: hsla(27, 91%, 29%, 0.9);
+
+  /* heading variables*/
+  --color-heading-1: hsla(27, 100%, 61%, 1);
+  --color-heading-2: hsla(27, 80%, 61%, 0.8);
+  --color-heading-3: hsla(27, 60%, 61%, 0.6);
+
+  /* text variables */
+  --color-text-base: hsl(27, 0%, 98%);
+  --color-text-hover: hsl(27, 25%, 74%);
+  --color-text-accent: hsl(27, 42%, 54%);
+  --color-text-inverted: hsl(27, 60%, 3%);
+
+  /* border variables */
+  --color-border: hsl(27, 100%, 61%);
+  --color-border-active: hsla(27, 48%, 47%, 1);
+  --color-border-hover: hsla(27, 25%, 46%, 1);
+
+  /* ring variables */
+  --color-ring-active: hsl(27, 62%, 55%);
+  --color-ring-focus: hsl(27, 62%, 75%);
+  --color-ring-hover: hsl(27, 62%, 35%);
+}
