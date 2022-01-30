@@ -16,7 +16,7 @@
   --color-text-inverted: hsl(27, 60%, 3%);
 
   /* border variables */
-  --color-border: hsl(27, 100%, 61%);
+  --color-border: hsl(0, 0%, 13%);
   --color-border-active: hsla(27, 48%, 47%, 1);
   --color-border-hover: hsla(27, 25%, 46%, 1);
 
@@ -37,13 +37,13 @@
   --color-heading-3: hsla(27, 60%, 61%, 0.6);
 
   /* text variables */
-  --color-text-base: hsl(27, 0%, 98%);
+  --color-text-base: rgb(14, 14, 14);
   --color-text-hover: hsl(27, 25%, 74%);
   --color-text-accent: hsl(27, 42%, 54%);
   --color-text-inverted: hsl(27, 60%, 3%);
 
   /* border variables */
-  --color-border: hsl(27, 100%, 61%);
+  --color-border: hsl(0, 0%, 5%);
   --color-border-active: hsla(27, 48%, 47%, 1);
   --color-border-hover: hsla(27, 25%, 46%, 1);
 
