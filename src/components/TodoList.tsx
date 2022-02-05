@@ -1,8 +1,9 @@
 import { User } from '@supabase/supabase-js';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { supabase } from '../lib/initSupabase';
 import { useForm } from 'react-hook-form';
 import { ITodo } from '../types';
+import { customers } from '@/lib/customers';
 import { Todo } from './Todo';
 
 type TodosProps = {
@@ -11,14 +12,14 @@ type TodosProps = {
 
 export default function Todos({ user }: TodosProps) {
   const [todos, setTodos] = useState<ITodo[]>([]);
-  const [done, setDone] = useState<ITodo[]>([]);
-  const [newTaskText, setNewTaskText] = useState<string>('');
   const [errorText, setError] = useState('');
   const { handleSubmit, register, resetField, setFocus } = useForm();
+  const [update, setUpdate] = useState<boolean>(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchTodos();
-  }, []);
+    console.log(todos);
+  }, [update]);
 
   useEffect(() => {
     setFocus('task');
@@ -46,6 +47,12 @@ export default function Todos({ user }: TodosProps) {
     }
   };
 
+  const addWeekly = () => {
+    customers.forEach(async (customer: string) => {
+      await addTodo(customer);
+    });
+  };
+
   const onSubmit = (data: any) => {
     addTodo(data.task);
     resetField('task');
@@ -53,30 +60,44 @@ export default function Todos({ user }: TodosProps) {
 
   return (
     <div className="w-screen h-screen flex flex-col justify-start p-5 items-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-1/3 flex flex-col items-center justify-center gap-2 my-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-1/3 flex flex-row items-center justify-center gap-2 my-2">
         <input
-          className="rounded w-full p-2"
+          className="rounded-lg w-full p-2 focus:ring-1 focus:ring-gray-300 focus:border-black"
           type="text"
           placeholder="..."
           autoComplete="off"
-          value={newTaskText}
           {...register('task', { required: true })}
-          onChange={e => {
-            setError('');
-            setNewTaskText(e.target.value);
-          }}
         />
-        <button type="submit" className="button-outlined">
-          Add
+        <button type="submit" className="rounded-lg border border-black py-2 px-4">
+          +
         </button>
       </form>
       {!!errorText && <Alert text={errorText} />}
-      <div className=" w-full flex justify-evenly mt-10">
-        <div className="bg-white shadow overflow-hidden rounded-md w-1/3">
-          <ul>{todos.map((todo: ITodo) => !todo.is_complete && <Todo key={todo.id} todo={todo} onDelete={() => deleteTodo(todo.id)} />)}</ul>
+      {/* <button type="button" className="absolute top-10 left-5" onClick={addWeekly}>
+        add weekly
+      </button> */}
+      <div className="flex w-full h-full gap-8 py-24 px-56">
+        <div className="w-full h-full">
+          <h2 className="w-full text-center font-semibold pb-4">Offen</h2>
+          <div className="w-full h-full border border-gray-400 rounded-lg">
+            <ul className="flex flex-col gap-2 p-4">
+              {todos.map(
+                (todo: ITodo) =>
+                  !todo.is_complete && <Todo key={todo.id} todo={todo} onDelete={() => deleteTodo(todo.id)} update={update} setUpdate={setUpdate} />
+              )}
+            </ul>
+          </div>
         </div>
-        <div className="bg-white shadow overflow-hidden rounded-md w-1/3">
-          <ul>{todos.map((todo: ITodo) => todo.is_complete && <Todo key={todo.id} todo={todo} onDelete={() => deleteTodo(todo.id)} />)}</ul>
+        <div className="w-full h-full">
+          <h2 className="w-full text-center font-semibold pb-4">Verplant</h2>
+          <div className="w-full h-full border border-gray-400 rounded-lg">
+            <ul className="flex flex-col gap-2 p-4">
+              {todos.map(
+                (todo: ITodo) =>
+                  todo.is_complete && <Todo key={todo.id} todo={todo} onDelete={() => deleteTodo(todo.id)} update={update} setUpdate={setUpdate} />
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

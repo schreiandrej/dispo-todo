@@ -1,6 +1,8 @@
 import { supabase } from '../lib/initSupabase';
 import { Auth } from '@supabase/ui';
 import TodoList from '../components/TodoList';
+import { DateComponent } from '@/components/DateComponent';
+import { LogoutButton } from '@/components/LogoutButton';
 
 export default function Home() {
   const { user } = Auth.useUser();
@@ -12,17 +14,13 @@ export default function Home() {
           <Auth supabaseClient={supabase} socialLayout="horizontal" socialButtonSize="xlarge" />
         </div>
       ) : (
-        <div className="w-full h-full flex flex-col justify-center items-center p-4" style={{ minWidth: 250, maxWidth: 600, margin: 'auto' }}>
-          <TodoList user={supabase.auth.user()} />
-          <button
-            className="absolute top-3 right-3 px-6 py-2 text-black font-semibold transition-colors duration-300 ease-in-out bg-transparent border rounded-md border-black hover:text-opacity-60 hover:border-opacity-60"
-            onClick={async () => {
-              const { error } = await supabase.auth.signOut();
-              if (error) console.log('Error logging out:', error.message);
-            }}
-          >
-            Logout
-          </button>
+        <div>
+          <DateComponent />
+          <LogoutButton supabase={supabase} />
+
+          <div className="w-full h-screen flex flex-col justify-center items-center p-4" style={{ minWidth: 250, maxWidth: 600, margin: 'auto' }}>
+            <TodoList user={supabase.auth.user()} />
+          </div>
         </div>
       )}
     </div>

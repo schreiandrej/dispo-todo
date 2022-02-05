@@ -1,13 +1,15 @@
 import { supabase } from '@/lib/initSupabase';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { ITodo } from '../types';
 
 type TodoProps = {
   todo: ITodo;
   onDelete: () => Promise<void>;
+  update: boolean;
+  setUpdate: Dispatch<SetStateAction<boolean>>;
 };
 
-export const Todo = ({ todo, onDelete }: TodoProps) => {
+export const Todo = ({ todo, onDelete, update, setUpdate }: TodoProps) => {
   const [isCompleted, setIsCompleted] = useState(todo.is_complete);
 
   const toggle = async () => {
@@ -17,16 +19,20 @@ export const Todo = ({ todo, onDelete }: TodoProps) => {
         throw new Error(error.message);
       }
       setIsCompleted(data.is_complete);
+      setUpdate(!update);
     } catch (error) {
       console.log('error', error);
     }
   };
 
   return (
-    <li onClick={toggle} className="w-full block cursor-pointer hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition duration-150 ease-in-out">
-      <div className="flex items-center px-4 py-4 sm:px-6">
+    <li
+      onClick={toggle}
+      className="w-full block cursor-pointer hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition duration-150 ease-in-out shadow-sm "
+    >
+      <div className="flex items-center py-1 sm:px-6">
         <div className="min-w-0 flex-1 flex items-center">
-          <div className={`text-sm leading-5 font-medium truncate ${todo.is_complete && 'line-through'}`}>{todo.task}</div>
+          <div className={`text-sm leading-5 truncate ${isCompleted ? 'line-through' : ''}`}>{todo.task}</div>
         </div>
         <button
           onClick={e => {
