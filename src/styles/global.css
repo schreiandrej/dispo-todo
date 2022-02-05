@@ -1,9 +1,3 @@
 @tailwind base;
-
 @tailwind components;
-@import './forms.css';
-@import './buttons.css';
-
 @tailwind utilities;
-@import './utilities.css';
-@import './themes.css';

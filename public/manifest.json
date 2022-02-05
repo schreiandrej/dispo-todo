@@ -1,6 +1,6 @@
 {
-  "name": "next-app",
-  "short_name": "next-app",
+  "name": "dispo-todo",
+  "short_name": "todo",
   "theme_color": "#000000",
   "background_color": "#004740",
   "display": "browser",

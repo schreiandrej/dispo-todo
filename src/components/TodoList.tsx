@@ -1,10 +1,10 @@
 import { User } from '@supabase/supabase-js';
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { supabase } from '../lib/initSupabase';
-import { useForm } from 'react-hook-form';
 import { ITodo } from '../types';
-import { customers } from '@/lib/customers';
 import { Todo } from './Todo';
+import { InputField } from './InputField';
+import { Title } from './Title';
 
 type TodosProps = {
   user: User | null;
@@ -13,7 +13,6 @@ type TodosProps = {
 export default function Todos({ user }: TodosProps) {
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [errorText, setError] = useState('');
-  const { handleSubmit, register, resetField, setFocus } = useForm();
   const [update, setUpdate] = useState<boolean>(true);
 
   useLayoutEffect(() => {
@@ -21,13 +20,10 @@ export default function Todos({ user }: TodosProps) {
     console.log(todos);
   }, [update]);
 
-  useEffect(() => {
-    setFocus('task');
-  }, [setFocus]);
-
   const fetchTodos = async () => {
     const { data: todos, error } = await supabase.from('todos').select('*').order('id', { ascending: true });
     if (error) console.log('error', error);
+    else if (todos === null) console.log('No data found!');
     else setTodos(todos);
   };
   const addTodo = async (taskText: string) => {
@@ -47,39 +43,14 @@ export default function Todos({ user }: TodosProps) {
     }
   };
 
-  const addWeekly = () => {
-    customers.forEach(async (customer: string) => {
-      await addTodo(customer);
-    });
-  };
-
-  const onSubmit = (data: any) => {
-    addTodo(data.task);
-    resetField('task');
-  };
-
   return (
     <div className="w-screen h-screen flex flex-col justify-start p-5 items-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-1/3 flex flex-row items-center justify-center gap-2 my-2">
-        <input
-          className="rounded-lg w-full p-2 focus:ring-1 focus:ring-gray-300 focus:border-black"
-          type="text"
-          placeholder="..."
-          autoComplete="off"
-          {...register('task', { required: true })}
-        />
-        <button type="submit" className="rounded-lg border border-black py-2 px-4">
-          +
-        </button>
-      </form>
-      {!!errorText && <Alert text={errorText} />}
-      {/* <button type="button" className="absolute top-10 left-5" onClick={addWeekly}>
-        add weekly
-      </button> */}
+      <InputField addTodo={addTodo} />
+
       <div className="flex w-full h-full gap-8 py-24 px-56">
         <div className="w-full h-full">
-          <h2 className="w-full text-center font-semibold pb-4">Offen</h2>
-          <div className="w-full h-full border border-gray-400 rounded-lg">
+          <Title title="offene Aufträge" />
+          <div className="w-full h-full border border-gray-600 rounded-lg">
             <ul className="flex flex-col gap-2 p-4">
               {todos.map(
                 (todo: ITodo) =>
@@ -89,8 +60,8 @@ export default function Todos({ user }: TodosProps) {
           </div>
         </div>
         <div className="w-full h-full">
-          <h2 className="w-full text-center font-semibold pb-4">Verplant</h2>
-          <div className="w-full h-full border border-gray-400 rounded-lg">
+          <Title title="verplante Aufträge" />
+          <div className="w-full h-full border border-gray-600 text-slate-500 rounded-lg">
             <ul className="flex flex-col gap-2 p-4">
               {todos.map(
                 (todo: ITodo) =>

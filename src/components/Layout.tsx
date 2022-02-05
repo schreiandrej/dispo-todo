@@ -32,7 +32,7 @@ export function Layout({ children }: Props) {
         <title>next-app</title>
       </Head>
       <ThemeProvider attribute="class" defaultTheme="dark">
-        <main className="w-screen">{children}</main>
+        <main className="w-screen text-gray-100 bg-slate-900">{children}</main>
       </ThemeProvider>
     </>
   );

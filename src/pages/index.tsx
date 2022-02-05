@@ -14,13 +14,10 @@ export default function Home() {
           <Auth supabaseClient={supabase} socialLayout="horizontal" socialButtonSize="xlarge" />
         </div>
       ) : (
-        <div>
+        <div className="w-full h-screen flex flex-col justify-center items-center p-4" style={{ minWidth: 250, maxWidth: 600, margin: 'auto' }}>
           <DateComponent />
           <LogoutButton supabase={supabase} />
-
-          <div className="w-full h-screen flex flex-col justify-center items-center p-4" style={{ minWidth: 250, maxWidth: 600, margin: 'auto' }}>
-            <TodoList user={supabase.auth.user()} />
-          </div>
+          <TodoList user={supabase.auth.user()} />
         </div>
       )}
     </div>
