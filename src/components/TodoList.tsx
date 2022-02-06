@@ -5,6 +5,16 @@ import { ITodo } from '../types';
 import { Todo } from './Todo';
 import { InputField } from './InputField';
 import { Title } from './Title';
+import { useDrop } from 'react-dnd';
+import { ItemTypes, WeekDays } from '@/lib/Constants';
+import { DropMonday } from './DropMonday';
+import { setPlanendDay } from '@/lib/setPlannedDay';
+import { addTodo } from '@/lib/addTodo';
+import { DropTuesday } from './DropTuesday';
+import { DropWensday } from './DropWensday';
+import { DropThursday } from './DropThursday';
+import { DropFriday } from './DropFriday';
+import { DropSaturday } from './DropSaturday';
 
 type TodosProps = {
   user: User | null;
@@ -14,7 +24,6 @@ const todoTable = process.env.NODE_ENV === 'development' ? 'dev-todos' : 'todos'
 
 export default function Todos({ user }: TodosProps) {
   const [todos, setTodos] = useState<ITodo[]>([]);
-  const [errorText, setError] = useState('');
   const [update, setUpdate] = useState<boolean>(true);
 
   useLayoutEffect(() => {
@@ -28,14 +37,7 @@ export default function Todos({ user }: TodosProps) {
     else if (todos === null) console.log('No data found!');
     else setTodos(todos);
   };
-  const addTodo = async (taskText: string) => {
-    const task = taskText.trim();
-    if (task.length) {
-      const { data: todo, error } = await supabase.from(todoTable).insert({ task, user_id: user?.id }).single();
-      if (error) setError(error.message);
-      else setTodos([...todos, todo]);
-    }
-  };
+
   const deleteTodo = async (id: string) => {
     try {
       await supabase.from(todoTable).delete().eq('id', id);
@@ -45,40 +47,48 @@ export default function Todos({ user }: TodosProps) {
     }
   };
 
+  const [, drop] = useDrop(() => ({
+    accept: ItemTypes.TASK,
+    drop: (item: any) => setPlanendDay(item.id, 'not_planned', update, setUpdate)
+  }));
+
   return (
     <div className="w-screen h-screen flex flex-col justify-start p-5 items-center">
-      <InputField addTodo={addTodo} />
+      <InputField user={user} todos={todos} setTodos={setTodos} />
 
-      <div className="flex w-full h-full gap-8 py-24 px-56">
+      <div className="flex w-full h-full gap-8 pt-5 px-24">
         <div className="w-full h-full">
-          <Title title="offene Aufträge" />
-          <div className="w-full h-full border border-gray-600 rounded-lg">
-            <ul className="flex flex-col gap-2 p-4">
-              {todos.map(
-                (todo: ITodo) =>
-                  !todo.is_complete && <Todo key={todo.id} todo={todo} onDelete={() => deleteTodo(todo.id)} update={update} setUpdate={setUpdate} />
-              )}
-            </ul>
+          <div className="w-full h-full border border-gray-600 rounded-lg" ref={drop}>
+            <ul className="flex flex-col gap-2 p-4">{todos.map((todo: ITodo) => todo.planned_day === 'not_planned' && <Todo key={todo.id} todo={todo} />)}</ul>
           </div>
         </div>
-        <div className="w-full h-full">
-          <Title title="verplante Aufträge" />
-          <div className="w-full h-full border border-gray-600 text-slate-500 rounded-lg">
-            <ul className="flex flex-col gap-2 p-4">
-              {todos.map(
-                (todo: ITodo) =>
-                  todo.is_complete && <Todo key={todo.id} todo={todo} onDelete={() => deleteTodo(todo.id)} update={update} setUpdate={setUpdate} />
-              )}
-            </ul>
+        <div className="w-full h-full flex flex-col gap-2">
+          <div className="flex flex-row w-full h-full gap-4 items-center">
+            <h2 className="w-9 text-slate-600">MO:</h2>
+            <DropMonday update={update} setUpdate={setUpdate} todos={todos} />
+          </div>
+          <div className="flex flex-row w-full h-full gap-4 items-center">
+            <h2 className="w-9 text-slate-600">DI:</h2>
+            <DropTuesday update={update} setUpdate={setUpdate} todos={todos} />
+          </div>
+          <div className="flex flex-row w-full h-full gap-4 items-center">
+            <h2 className="w-9 text-slate-600">MI:</h2>
+            <DropWensday update={update} setUpdate={setUpdate} todos={todos} />
+          </div>
+          <div className="flex flex-row w-full h-full gap-4 items-center">
+            <h2 className="w-9 text-slate-600">DO:</h2>
+            <DropThursday update={update} setUpdate={setUpdate} todos={todos} />
+          </div>
+          <div className="flex flex-row w-full h-full gap-4 items-center">
+            <h2 className="w-9 text-slate-600">FR:</h2>
+            <DropFriday update={update} setUpdate={setUpdate} todos={todos} />
+          </div>
+          <div className="flex flex-row w-full h-full gap-4 items-center">
+            <h2 className="w-9 text-slate-600">SA:</h2>
+            <DropSaturday update={update} setUpdate={setUpdate} todos={todos} />
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-const Alert = ({ text }: { text: string }) => (
-  <div className="rounded-md bg-red-100 p-4 my-3">
-    <div className="text-sm leading-5 text-red-700">{text}</div>
-  </div>
-);
