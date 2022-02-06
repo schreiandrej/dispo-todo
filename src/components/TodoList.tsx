@@ -10,6 +10,8 @@ type TodosProps = {
   user: User | null;
 };
 
+const todoTable = process.env.NODE_ENV === 'development' ? 'dev-todos' : 'todos';
+
 export default function Todos({ user }: TodosProps) {
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [errorText, setError] = useState('');
@@ -21,7 +23,7 @@ export default function Todos({ user }: TodosProps) {
   }, [update]);
 
   const fetchTodos = async () => {
-    const { data: todos, error } = await supabase.from('todos').select('*').order('id', { ascending: true });
+    const { data: todos, error } = await supabase.from(todoTable).select('*').order('id', { ascending: true });
     if (error) console.log('error', error);
     else if (todos === null) console.log('No data found!');
     else setTodos(todos);
@@ -29,14 +31,14 @@ export default function Todos({ user }: TodosProps) {
   const addTodo = async (taskText: string) => {
     const task = taskText.trim();
     if (task.length) {
-      const { data: todo, error } = await supabase.from('todos').insert({ task, user_id: user?.id }).single();
+      const { data: todo, error } = await supabase.from(todoTable).insert({ task, user_id: user?.id }).single();
       if (error) setError(error.message);
       else setTodos([...todos, todo]);
     }
   };
   const deleteTodo = async (id: string) => {
     try {
-      await supabase.from('todos').delete().eq('id', id);
+      await supabase.from(todoTable).delete().eq('id', id);
       setTodos(todos.filter((x: ITodo) => x.id != id));
     } catch (error) {
       console.log('error', error);
