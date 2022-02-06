@@ -1,7 +1,5 @@
 import { ITodo } from 'src/types';
-import { supabase } from './initSupabase';
-
-const todoTable = process.env.NODE_ENV === 'development' ? 'dev-todos' : 'todos';
+import { supabase, todoTable } from './initSupabase';
 
 export const deleteTodo = async (id: string, todos: ITodo[], setTodos: any) => {
   try {

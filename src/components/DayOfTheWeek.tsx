@@ -28,8 +28,8 @@ export const DropWeekday = (props: Props) => {
   }));
 
   return (
-    <div className="text-slate-300 flex flex-col w-full h-full border border-gray-600 rounded-lg" ref={drop}>
-      <h2 className="w-full text-left pl-2 pt-1 text-slate-600">{props.weekday}</h2>
+    <div className="text-slate-400 flex flex-col w-full h-full border border-gray-700 rounded-lg" ref={drop}>
+      <h2 className="w-full text-center pr-2 pt-1 text-slate-600">{props.weekday}</h2>
       <ul className="flex flex-col gap-2 p-2 px-4">{todos.map((todo: ITodo) => todo.planned_day === props.weekday && <Todo key={todo.id} todo={todo} />)}</ul>
     </div>
   );
