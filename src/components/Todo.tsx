@@ -17,14 +17,15 @@ export const Todo = ({ todo }: TodoProps) => {
   }));
 
   return (
-    <li className={`w-full block cursor-pointer shadow-sm ${isDragging ? 'opacity-50' : 'opacity-100'}`} ref={drag} id="test">
-      <div className="flex items-center py-1 sm:px-6">
+    <li
+      className={`w-full block cursor-pointer hover:text-gray-400 focus:outline-none focus:bg-gray-600 transition duration-150 ease-in-out ${
+        isDragging ? 'opacity-50' : 'opacity-100'
+      }`}
+      ref={drag}
+    >
+      <div className="flex items-center py-1">
         <div className="min-w-0 flex-1 flex items-center">
-          <div
-            className={`text-sm leading-5 cursor-text truncate hover:text-gray-400 focus:outline-none focus:bg-gray-600 transition duration-150 ease-in-out`}
-          >
-            {todo.task}
-          </div>
+          <div className={`text-sm leading-5 truncate`}>{todo.task}</div>
         </div>
       </div>
     </li>
