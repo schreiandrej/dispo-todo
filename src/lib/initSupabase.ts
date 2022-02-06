@@ -10,3 +10,4 @@ if (url && key) {
 }
 
 export { supabase };
+export const todoTable = process.env.NODE_ENV === 'development' ? 'dev-todos' : 'todos';

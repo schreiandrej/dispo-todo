@@ -2,15 +2,18 @@ import { ITodo } from '../types';
 
 import { ItemTypes } from '@/lib/Constants';
 import { useDrag } from 'react-dnd';
+import { useTodos } from './Context';
 
 type TodoProps = {
   todo: ITodo;
 };
 
 export const Todo = ({ todo }: TodoProps) => {
+  const { todos } = useTodos();
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.TASK,
-    item: { id: todo.id },
+    item: { id: todo.id, todos: todos },
     collect: monitor => ({
       isDragging: !!monitor.isDragging()
     })

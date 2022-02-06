@@ -4,17 +4,20 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Auth } from '@supabase/ui';
 import { supabase } from '../lib/initSupabase';
+import { TodoContextProvider } from '@/components/Context';
 import '../styles/global.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Auth.UserContextProvider supabaseClient={supabase}>
-      <DndProvider backend={HTML5Backend}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </DndProvider>
-    </Auth.UserContextProvider>
+    <DndProvider backend={HTML5Backend}>
+      <Auth.UserContextProvider supabaseClient={supabase}>
+        <TodoContextProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </TodoContextProvider>
+      </Auth.UserContextProvider>
+    </DndProvider>
   );
 }
 

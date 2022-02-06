@@ -3,15 +3,15 @@ import { User } from '@supabase/supabase-js';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { ITodo } from 'src/types';
+import { useTodos } from './Context';
 
 interface Props {
   user: User | null;
-  todos: ITodo[];
-  setTodos: any;
 }
 
-export const InputField = ({ user, todos, setTodos }: Props) => {
+export const InputField = ({ user }: Props) => {
   const { handleSubmit, register, resetField, setFocus } = useForm();
+  const { todos, setTodos } = useTodos();
 
   const onSubmit = (data: any) => {
     addTodo(data.task, todos, setTodos, user);
