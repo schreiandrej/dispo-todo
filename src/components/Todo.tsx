@@ -28,7 +28,7 @@ export const Todo = ({ todo }: TodoProps) => {
       ref={drag}
     >
       <div className="flex items-center py-1">
-        <div className="w-full flex-1 flex justify-between items-center">
+        <div className="group w-full flex-1 flex justify-between items-center">
           <div className={`text-sm leading-5 truncate`}>{todo.task}</div>
           <button
             onClick={e => {
@@ -36,6 +36,7 @@ export const Todo = ({ todo }: TodoProps) => {
               e.stopPropagation();
               deleteTodo(todo.id, todos, setTodos);
             }}
+            className={`opacity-0 group-hover:opacity-100`}
           >
             <svg
               className="opacity-30 w-4 h-4 transition-opacity duration-150 ease-out hover:opacity-100"

@@ -1,5 +1,5 @@
 import { User } from '@supabase/supabase-js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ITodo } from '../types';
 import { Todo } from './Todo';
 import { InputField } from './InputField';
@@ -10,6 +10,7 @@ import { DropWeekday } from './DayOfTheWeek';
 import { weekdays } from '@/lib/Constants';
 import { useTodos } from './Context';
 import { supabase, todoTable } from '@/lib/initSupabase';
+import { fetchWeather } from '@/lib/fetchWeather';
 
 type TodosProps = {
   user: User | null;
@@ -17,11 +18,15 @@ type TodosProps = {
 
 export default function Todos({ user }: TodosProps) {
   const { todos, setTodos } = useTodos();
+  const [weather, setWeather] = useState<any>();
 
   useEffect(() => {
     (async () => {
       const data = await fetchTodos();
       data && setTodos(data);
+
+      const weatherData = await fetchWeather();
+      weatherData && setWeather(weatherData);
     })();
   }, [setTodos]);
 
