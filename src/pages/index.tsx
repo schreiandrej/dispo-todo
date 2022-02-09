@@ -8,13 +8,13 @@ export default function Home() {
   const { user } = Auth.useUser();
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="flex h-screen w-full items-center justify-center">
       {!user ? (
-        <div className="w-1/3 flex justify-center bg-slate-700 items-center p-4 rounded-lg border border-emerald-300">
+        <div className="flex w-1/3 items-center justify-center rounded-lg border border-emerald-300 bg-slate-700 p-4">
           <Auth supabaseClient={supabase} socialLayout="horizontal" socialButtonSize="xlarge" />
         </div>
       ) : (
-        <div className="w-full h-screen flex flex-col justify-center items-center p-4" style={{ minWidth: 250, maxWidth: 600, margin: 'auto' }}>
+        <div className="flex h-screen w-full flex-col items-center justify-center p-4" style={{ minWidth: 250, maxWidth: 600, margin: 'auto' }}>
           <DateComponent />
           <LogoutButton supabase={supabase} />
           <TodoList user={supabase.auth.user()} />

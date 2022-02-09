@@ -23,9 +23,9 @@ export const InputField = ({ user }: Props) => {
   }, [setFocus]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-1/3 flex flex-row items-center justify-center gap-2 my-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="my-2 flex w-1/3 flex-row items-center justify-center gap-2">
       <input
-        className="rounded-lg w-full p-2 focus:ring-1 focus:ring-gray-300 focus:border-black bg-transparent"
+        className="w-full rounded-lg bg-transparent p-2 focus:border-black focus:ring-1 focus:ring-gray-300"
         type="text"
         placeholder="..."
         autoComplete="off"

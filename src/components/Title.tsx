@@ -5,5 +5,5 @@ interface Props {
 }
 
 export const Title = (props: Props) => {
-  return <h2 className="w-full text-center text-slate-500 font-semibold pb-4">{props.title}</h2>;
+  return <h2 className="w-full pb-4 text-center font-semibold text-slate-500">{props.title}</h2>;
 };

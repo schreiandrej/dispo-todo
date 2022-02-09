@@ -5,15 +5,15 @@ export interface ITodo {
   planned_day: string;
 }
 
-export interface IWeatherForcast {
+export interface IWeatherObject {
   lat: number;
   lon: number;
   timezone: string;
   timezone_offset: number;
-  daily: IDaily[];
+  daily: IWeatherForcast[];
 }
 
-export interface IDaily {
+export interface IWeatherForcast {
   dt: number;
   sunrise: number;
   sunset: number;

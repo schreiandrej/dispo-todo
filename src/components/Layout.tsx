@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { ReactNode, useEffect, useState } from 'react';
-import { ThemeProvider } from 'next-themes';
 
 type Props = {
   children?: ReactNode;
@@ -31,9 +30,7 @@ export function Layout({ children }: Props) {
 
         <title>next-app</title>
       </Head>
-      <ThemeProvider attribute="class" defaultTheme="dark">
-        <main className="w-screen text-gray-100 bg-slate-900">{children}</main>
-      </ThemeProvider>
+      <main className="w-screen bg-slate-900 text-gray-100">{children}</main>
     </>
   );
 }

@@ -2,4 +2,4 @@ export const ItemTypes = {
   TASK: 'task'
 };
 
-export const weekdays: string[] = ['Mondtag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+export const weekdays: number[] = [1, 2, 3, 4, 5, 6];
