@@ -1,5 +1,7 @@
+import { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ITodo } from '../types';
-
 import { ItemTypes } from '@/lib/Constants';
 import { useDrag } from 'react-dnd';
 import { useTodos } from './Context';
@@ -11,6 +13,7 @@ type TodoProps = {
 
 export const Todo = ({ todo }: TodoProps) => {
   const { todos, setTodos } = useTodos();
+  const [copiedState, setCopiedState] = useState<boolean>(false);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.TASK,
@@ -23,13 +26,22 @@ export const Todo = ({ todo }: TodoProps) => {
   return (
     <li
       className={`block w-full cursor-pointer transition duration-150 ease-in-out hover:text-gray-400 focus:bg-gray-600 focus:outline-none ${
-        isDragging ? 'opacity-50' : 'opacity-100'
+        isDragging ? 'opacity-30' : 'opacity-100'
       }`}
       ref={drag}
     >
       <div className="flex items-center py-1">
         <div className="group flex w-full flex-1 items-center justify-between">
-          <div className={`truncate text-sm leading-5`}>{todo.task}</div>
+          <CopyToClipboard text={todo.task.slice(0, 7)} onCopy={() => setCopiedState(true)}>
+            <div data-tip data-for={todo.task} className={`truncate text-sm leading-5`} onMouseLeave={() => setCopiedState(false)}>
+              {todo.task}
+            </div>
+          </CopyToClipboard>
+          <div className={copiedState ? 'opacity-100' : 'opacity-0'}>
+            <ReactTooltip id={todo.task} type="info" effect="float" place="top">
+              copied!
+            </ReactTooltip>
+          </div>
           <button
             onClick={e => {
               e.preventDefault();

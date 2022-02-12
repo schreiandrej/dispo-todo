@@ -2,7 +2,7 @@ import React from 'react';
 
 export const CloudySVG = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" className="opacity-50">
       <defs>
         <filter id="a" width="200%" height="200%">
           <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -44,7 +44,7 @@ export const CloudySVG = () => {
 
 export const RainySVG = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" className="opacity-50">
       <defs>
         <filter id="blur" width="200%" height="200%">
           <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -100,7 +100,7 @@ export const RainySVG = () => {
 
 export const SnowySVG = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" className="opacity-50">
       <defs>
         <filter id="blur" width="200%" height="200%">
           <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -145,3 +145,11 @@ export const SnowySVG = () => {
     </svg>
   );
 };
+
+export const icons = [
+  { id: 'Clouds', icon: <CloudySVG /> },
+  { id: 'Rain', icon: <RainySVG /> },
+  { id: 'Snow', icon: <SnowySVG /> },
+  { id: 'Clear', icon: <SnowySVG /> },
+  { id: 'Drizzle', icon: <SnowySVG /> }
+];

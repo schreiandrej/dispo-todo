@@ -52,8 +52,8 @@ export default function Todos({ user }: TodosProps) {
       <InputField user={user} />
 
       {todos && (
-        <div className="flex h-full w-full gap-8 pt-5">
-          <div className="h-full w-1/4">
+        <div className="my-auto flex h-4/5 w-full gap-2 pt-5">
+          <div className="h-full w-1/4 ">
             <div className="h-full w-full rounded-lg border border-gray-600" ref={drop}>
               <ul className="flex flex-col gap-2 p-4">
                 {todos.map((todo: ITodo) => todo.planned_day === 'not_planned' && <Todo key={todo.id} todo={todo} />)}

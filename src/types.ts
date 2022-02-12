@@ -58,3 +58,11 @@ export interface ITemp {
   eve: number;
   morn: number;
 }
+
+export interface IWeatherState {
+  weatherMain: string;
+  weatherDescription: string;
+  weatherIcon: JSX.Element;
+  temperature: string;
+  formatDate: string;
+}
