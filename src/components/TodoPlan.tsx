@@ -11,6 +11,7 @@ import { useTodos } from './Context';
 import { supabase, todoTable } from '@/lib/initSupabase';
 import { fetchWeather } from '@/lib/fetchWeather';
 import { SearchInput } from './SearchSelect';
+import { InputField } from './InputField';
 
 type TodosProps = {
   user: User | null;
@@ -50,14 +51,16 @@ export const TodoPlan = ({ user }: TodosProps) => {
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-start px-12">
-      {/* <InputField user={user} /> */}
-      <SearchInput user={user} />
+      <div className="flex w-full flex-col justify-center">
+        <SearchInput user={user} />
+        <InputField user={user} />
+      </div>
 
       {todos && (
         <div className="my-auto flex h-4/5 w-full gap-1">
           <div className="h-full w-1/4">
             <div className="h-full w-full rounded-md border border-slate-800 p-1" ref={drop}>
-              <h2 className="mb-2 w-full pl-2 text-left text-sm text-slate-600 underline">offen</h2>
+              <h2 className="mb-2 w-full pl-2 text-left text-sm text-slate-600 underline">Offen</h2>
               <ul className="flex flex-col pl-2">{todos.map((todo: ITodo) => todo.planned_day === 'not_planned' && <Todo key={todo.id} todo={todo} />)}</ul>
             </div>
           </div>

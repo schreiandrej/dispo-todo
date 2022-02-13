@@ -42,7 +42,9 @@ export const DayOfTheWeek = ({ weekday, weather }: Props) => {
       <div className="mb-2 flex items-start justify-between">
         <h2 className="w-full pl-2 text-left text-sm text-slate-600 underline">{weatherState?.formatDate}</h2>
         <div className="absolute top-1 right-1 flex flex-row pr-2 text-right text-sm text-slate-600">
-          <div className={`-mr-1 ${parseInt(weatherState!.temperature) < 0 && 'text-red-600 opacity-100'}`}>{weatherState?.temperature}</div>
+          <div className={`-mr-1 ${weatherState?.temperature && parseInt(weatherState?.temperature) < 0 && 'text-red-600 opacity-100'}`}>
+            {weatherState?.temperature}
+          </div>
           <div className="-mt-3 -mr-5">{weatherState?.weatherIcon}</div>
         </div>
       </div>

@@ -13,13 +13,14 @@ export const SearchInput = ({ user }: Props): JSX.Element => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
+    console.log(data);
     if (data.length > 0) {
       addTodo(data, todos, setTodos, user);
     }
   };
 
   return (
-    <div className="relative my-10 flex h-10 w-full justify-center">
+    <div className="relative flex h-10 w-full justify-center">
       <SelectSearch
         options={[]}
         autoFocus
