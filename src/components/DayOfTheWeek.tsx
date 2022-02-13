@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ItemTypes } from '@/lib/Constants';
 import { supabase, todoTable } from '@/lib/initSupabase';
 import { useDrop } from 'react-dnd';
@@ -37,15 +38,15 @@ export const DayOfTheWeek = ({ weekday, weather }: Props) => {
   }, [weather, weekday]);
 
   return (
-    <div className="flex h-full w-full flex-col rounded-lg border border-gray-700 text-slate-400" ref={drop}>
-      <div className="flex flex-row items-start justify-between">
-        <h2 className="w-full pl-2 text-left text-sm text-slate-600">{weatherState?.formatDate}</h2>
-        <div className="flex flex-row gap-2 pr-2 text-right text-sm text-slate-600">
-          <div className="-mt-2 -mr-5">{weatherState?.weatherIcon}</div>
-          <div>{weatherState?.temperature}</div>
+    <div className="relative flex h-full w-full flex-col rounded-md border border-slate-800 p-1" ref={drop}>
+      <div className="mb-2 flex items-start justify-between">
+        <h2 className="w-full pl-2 text-left text-sm text-slate-600 underline">{weatherState?.formatDate}</h2>
+        <div className="absolute top-1 right-1 flex flex-row pr-2 text-right text-sm text-slate-600">
+          <div className={`-mr-1 ${parseInt(weatherState!.temperature) < 0 && 'text-red-600 opacity-100'}`}>{weatherState?.temperature}</div>
+          <div className="-mt-3 -mr-5">{weatherState?.weatherIcon}</div>
         </div>
       </div>
-      <ul className="flex flex-col gap-2  px-4">{todos.map((todo: ITodo) => todo.planned_day === weekday.toString() && <Todo key={todo.id} todo={todo} />)}</ul>
+      <ul className="flex flex-col pl-2">{todos.map((todo: ITodo) => todo.planned_day === weekday.toString() && <Todo key={todo.id} todo={todo} />)}</ul>
     </div>
   );
 };

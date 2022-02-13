@@ -16,7 +16,7 @@ type TodosProps = {
   user: User | null;
 };
 
-export default function Todos({ user }: TodosProps) {
+export const TodoPlan = ({ user }: TodosProps) => {
   const { todos, setTodos } = useTodos();
   const [weather, setWeather] = useState<IWeatherForcast[] | null>(null);
 
@@ -49,24 +49,23 @@ export default function Todos({ user }: TodosProps) {
   }));
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-start p-5">
+    <div className="flex h-screen w-screen flex-col items-center justify-start px-12">
       {/* <InputField user={user} /> */}
       <SearchInput user={user} />
 
       {todos && (
-        <div className="my-auto flex h-4/5 w-full gap-2 pt-5">
-          <div className="h-full w-1/4 ">
-            <div className="h-full w-full rounded-lg border border-gray-600" ref={drop}>
-              <ul className="flex flex-col gap-2 p-4">
-                {todos.map((todo: ITodo) => todo.planned_day === 'not_planned' && <Todo key={todo.id} todo={todo} />)}
-              </ul>
+        <div className="my-auto flex h-4/5 w-full gap-1">
+          <div className="h-full w-1/4">
+            <div className="h-full w-full rounded-md border border-slate-800 p-1" ref={drop}>
+              <h2 className="mb-2 w-full pl-2 text-left text-sm text-slate-600 underline">offen</h2>
+              <ul className="flex flex-col pl-2">{todos.map((todo: ITodo) => todo.planned_day === 'not_planned' && <Todo key={todo.id} todo={todo} />)}</ul>
             </div>
           </div>
-          <div className="grid-cols-fr grid h-full w-full grid-cols-3 grid-rows-2 gap-2">
+          <div className="grid-cols-fr grid h-full w-full grid-cols-3 grid-rows-2 gap-1">
             {weather && weekdays.map(day => <DayOfTheWeek key={day} weekday={day} weather={weather} />)}
           </div>
         </div>
       )}
     </div>
   );
-}
+};

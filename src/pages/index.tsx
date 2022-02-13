@@ -1,6 +1,6 @@
 import { supabase } from '../lib/initSupabase';
 import { Auth } from '@supabase/ui';
-import TodoList from '../components/TodoList';
+import { TodoPlan } from '../components/TodoPlan';
 import { DateComponent } from '@/components/DateComponent';
 import { LogoutButton } from '@/components/LogoutButton';
 
@@ -14,10 +14,10 @@ export default function Home() {
           <Auth supabaseClient={supabase} socialLayout="horizontal" socialButtonSize="xlarge" />
         </div>
       ) : (
-        <div className="flex h-screen w-full flex-col items-center justify-center p-4" style={{ minWidth: 250, maxWidth: 600, margin: 'auto' }}>
+        <div className="flex h-screen w-full flex-col items-center justify-center p-4">
           <DateComponent />
           <LogoutButton supabase={supabase} />
-          <TodoList user={supabase.auth.user()} />
+          <TodoPlan user={supabase.auth.user()} />
         </div>
       )}
     </div>
