@@ -2,7 +2,6 @@ import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { ITodo, IWeatherForcast } from '../types';
 import { Todo } from './Todo';
-import { InputField } from './InputField';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '@/lib/Constants';
 import { fetchTodos } from '@/lib/fetchTodos';
@@ -11,6 +10,7 @@ import { weekdays } from '@/lib/Constants';
 import { useTodos } from './Context';
 import { supabase, todoTable } from '@/lib/initSupabase';
 import { fetchWeather } from '@/lib/fetchWeather';
+import { SearchInput } from './SearchSelect';
 
 type TodosProps = {
   user: User | null;
@@ -19,6 +19,7 @@ type TodosProps = {
 export default function Todos({ user }: TodosProps) {
   const { todos, setTodos } = useTodos();
   const [weather, setWeather] = useState<IWeatherForcast[] | null>(null);
+  const [inputValue, setInputValue] = useState<string | undefined>();
 
   useEffect(() => {
     (async () => {
@@ -30,7 +31,7 @@ export default function Todos({ user }: TodosProps) {
         weatherData && setWeather(weatherData);
       }
     })();
-  }, [setTodos]);
+  }, [setTodos, weather]);
 
   const [, drop] = useDrop(() => ({
     accept: ItemTypes.TASK,
@@ -49,7 +50,8 @@ export default function Todos({ user }: TodosProps) {
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-start p-5">
-      <InputField user={user} />
+      {/* <InputField user={user} /> */}
+      <SearchInput inputValue={inputValue} setInputValue={setInputValue} user={user} />
 
       {todos && (
         <div className="my-auto flex h-4/5 w-full gap-2 pt-5">
