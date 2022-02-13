@@ -68,7 +68,7 @@
  * Options wrapper
  */
 .select-search__select {
-  background: rgb(37, 37, 41);
+  background: rgb(15 23 42);
   box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.15);
 }
 
@@ -95,7 +95,7 @@
   height: 36px;
   width: 100%;
   padding: 0 16px;
-  background: rgb(29, 29, 29);
+  background: rgb(15 23 42);
   border: none;
   outline: none;
   font-family: 'Noto Sans', sans-serif;
@@ -110,7 +110,7 @@
 
 .select-search__option.is-selected {
   background: #2fcc8b;
-  color: #fff;
+  color: rgb(71 85 105);
 }
 
 .select-search__option.is-highlighted,
@@ -121,7 +121,7 @@
 .select-search__option.is-highlighted.is-selected,
 .select-search__option.is-selected:hover {
   background: #2eb378;
-  color: #fff;
+  color: rgb(71 85 105);
 }
 
 /**

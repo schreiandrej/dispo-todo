@@ -19,7 +19,6 @@ type TodosProps = {
 export default function Todos({ user }: TodosProps) {
   const { todos, setTodos } = useTodos();
   const [weather, setWeather] = useState<IWeatherForcast[] | null>(null);
-  const [inputValue, setInputValue] = useState<string | undefined>();
 
   useEffect(() => {
     (async () => {
@@ -35,8 +34,9 @@ export default function Todos({ user }: TodosProps) {
 
   const [, drop] = useDrop(() => ({
     accept: ItemTypes.TASK,
-    drop: async (item: any) => {
+    drop: async (item: { id: string; todos: ITodo[] }) => {
       try {
+        console.log(item);
         const { data, error } = await supabase.from(todoTable).update({ planned_day: 'not_planned' }).eq('id', item.id).single();
         if (error) {
           throw new Error(error.message);
@@ -51,7 +51,7 @@ export default function Todos({ user }: TodosProps) {
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-start p-5">
       {/* <InputField user={user} /> */}
-      <SearchInput inputValue={inputValue} setInputValue={setInputValue} user={user} />
+      <SearchInput user={user} />
 
       {todos && (
         <div className="my-auto flex h-4/5 w-full gap-2 pt-5">

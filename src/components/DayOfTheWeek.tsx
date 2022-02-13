@@ -12,7 +12,7 @@ interface Props {
   weather: IWeatherForcast[];
 }
 
-export const DayOfTheWeek = (props: Props) => {
+export const DayOfTheWeek = ({ weekday, weather }: Props) => {
   const { todos, setTodos } = useTodos();
   const [weatherState, setWeatherState] = useState<IWeatherState | null>(null);
 
@@ -21,7 +21,7 @@ export const DayOfTheWeek = (props: Props) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     drop: async (item: any) => {
       try {
-        const { data, error } = await supabase.from(todoTable).update({ planned_day: props.weekday }).eq('id', item.id).single();
+        const { data, error } = await supabase.from(todoTable).update({ planned_day: weekday }).eq('id', item.id).single();
         if (error) {
           throw new Error(error.message);
         }
@@ -33,21 +33,19 @@ export const DayOfTheWeek = (props: Props) => {
   }));
 
   useEffect(() => {
-    getWeather(props.weekday, props.weather, setWeatherState);
-  }, []);
+    getWeather(weekday, weather, setWeatherState);
+  }, [weather, weekday]);
 
   return (
     <div className="flex h-full w-full flex-col rounded-lg border border-gray-700 text-slate-400" ref={drop}>
-      <div className="flex flex-row items-center justify-between">
-        <h2 className="w-full pt-1 pl-2 text-left text-slate-600">{weatherState?.formatDate}</h2>
+      <div className="flex flex-row items-start justify-between">
+        <h2 className="w-full pl-2 text-left text-sm text-slate-600">{weatherState?.formatDate}</h2>
         <div className="flex flex-row gap-2 pr-2 text-right text-sm text-slate-600">
-          <div className="-m-2">{weatherState?.weatherIcon}</div>
+          <div className="-mt-2 -mr-5">{weatherState?.weatherIcon}</div>
           <div>{weatherState?.temperature}</div>
         </div>
       </div>
-      <ul className="flex flex-col gap-2 p-2 px-4">
-        {todos.map((todo: ITodo) => todo.planned_day === props.weekday.toString() && <Todo key={todo.id} todo={todo} />)}
-      </ul>
+      <ul className="flex flex-col gap-2  px-4">{todos.map((todo: ITodo) => todo.planned_day === weekday.toString() && <Todo key={todo.id} todo={todo} />)}</ul>
     </div>
   );
 };

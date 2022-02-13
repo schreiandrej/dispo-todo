@@ -12,7 +12,7 @@ export const getWeather = (weekday: number, weather: IWeatherForcast[], setWeath
   const weatherIcon = icons.filter(icon => icon.id === weatherMain)[0].icon;
   const temperature = `${Math.floor(day[0].temp.morn)}°C`;
 
-  const formatDate = format(fromUnixTime(day[0]?.dt), 'eeee, dd.MM.yy', { locale: de });
+  const formatDate = format(fromUnixTime(day[0]?.dt), 'eeee, dd.MM', { locale: de });
 
   setWeatherState({ weatherMain, weatherDescription, weatherIcon, temperature, formatDate });
 };
