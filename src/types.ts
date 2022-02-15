@@ -66,3 +66,14 @@ export interface IWeatherState {
   temperature: string;
   formatDate: string;
 }
+
+export interface ICity {
+  id: number;
+  name: string;
+  coordinaten: ICoordinates;
+}
+
+export interface ICoordinates {
+  lat: string;
+  lon: string;
+}
