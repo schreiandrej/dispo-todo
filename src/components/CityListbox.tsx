@@ -10,14 +10,11 @@ interface Props {
 
 export const CityListbox = ({ cityWeather, setCityWeather }: Props) => {
   return (
-    <div className="fixed top-16 w-72">
+    <div className="z-10 w-full">
       <Listbox value={cityWeather} onChange={setCityWeather}>
         <div className="relative mt-1">
-          <Listbox.Button className="relative w-full cursor-default rounded-lg bg-transparent py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-300 sm:text-sm">
+          <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-slate-800 bg-transparent py-2 text-center shadow-md focus:outline-none sm:text-sm">
             <span className="block truncate">{cityWeather.name}</span>
-            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <SelectorIcon />
-            </span>
           </Listbox.Button>
           <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
             <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-slate-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
@@ -25,24 +22,12 @@ export const CityListbox = ({ cityWeather, setCityWeather }: Props) => {
                 <Listbox.Option
                   key={cityIndex}
                   className={({ active }) =>
-                    `${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'}
-                          relative cursor-default select-none py-2 pl-10 pr-4`
+                    `${active ? 'bg-slate-600 text-slate-200' : 'text-slate-400'}
+                          relative cursor-pointer select-none py-2 text-center`
                   }
                   value={city}
                 >
-                  {({ selected, active }) => (
-                    <>
-                      <span className={`${selected ? 'font-medium' : 'font-normal'} block truncate`}>{city.name}</span>
-                      {selected ? (
-                        <span
-                          className={`${active ? 'text-amber-600' : 'text-amber-600'}
-                                absolute inset-y-0 left-0 flex items-center pl-3`}
-                        >
-                          <CheckIcon />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
+                  {({ selected, active }) => <span className={`${selected ? 'font-medium' : 'font-normal'} block truncate`}>{city.name}</span>}
                 </Listbox.Option>
               ))}
             </Listbox.Options>

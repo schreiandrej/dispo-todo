@@ -2,7 +2,7 @@ export const ItemTypes = {
   TASK: 'task'
 };
 
-export const weekdays: number[] = [1, 2, 3, 4, 5, 6];
+export const weekdays: number[] = [1, 2, 3, 4, 5];
 
 export const cities = [
   { id: 1, name: 'Detmold', coordinaten: { lat: '51.936284', lon: '8.8791526' } },
