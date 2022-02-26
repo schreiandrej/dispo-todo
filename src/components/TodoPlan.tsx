@@ -13,6 +13,7 @@ import { fetchWeather } from '@/lib/fetchWeather';
 import { SearchInput } from './SearchSelect';
 import { InputField } from './InputField';
 import { CityListbox } from './CityListbox';
+import { CommandPalette } from './CommandPalette';
 
 type TodosProps = {
   user: User | null;
@@ -54,31 +55,36 @@ export const TodoPlan = ({ user }: TodosProps) => {
   }));
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-start px-12">
-      <div className="mt-14 flex w-full flex-row justify-center">
-        <div className="flex w-full flex-col">
-          <div className="flex h-full w-1/2 items-center">
-            <SearchInput user={user} />
-          </div>
-          <div className="flex h-full w-1/2 items-center">
-            <InputField user={user} />
-          </div>
-        </div>
-        <div className="flex h-full w-1/4 items-end justify-end pb-2">
-          <CityListbox cityWeather={cityWeather} setCityWeather={setCityWeather} />
-        </div>
-      </div>
-      {todos && (
-        <div className="my-auto flex h-4/5 w-full gap-1">
-          <div className="h-full w-1/4">
-            <div className="h-full w-full rounded-md border border-slate-800 p-1" ref={drop}>
-              <h2 className="mb-2 w-full pl-2 text-left text-sm text-slate-600 underline">Offen</h2>
-              <ul className="flex flex-col pl-2">{todos.map((todo: ITodo) => todo.planned_day === 'not_planned' && <Todo key={todo.id} todo={todo} />)}</ul>
+    <>
+      <CommandPalette user={user} />
+      <div className="flex h-screen w-screen flex-col items-center justify-start px-12">
+        <div className="mt-14 flex w-full flex-row justify-center">
+          <div className="flex w-full flex-col">
+            <div className="flex h-full w-1/2 items-center">
+              <SearchInput user={user} />
+            </div>
+            <div className="flex h-full w-1/2 items-center">
+              <InputField user={user} />
             </div>
           </div>
-          <div className=" flex h-full w-full flex-col gap-1">{weather && weekdays.map(day => <DayOfTheWeek key={day} weekday={day} weather={weather} />)}</div>
+          <div className="flex h-full w-1/4 items-end justify-end pb-2">
+            <CityListbox cityWeather={cityWeather} setCityWeather={setCityWeather} />
+          </div>
         </div>
-      )}
-    </div>
+        {todos && (
+          <div className="my-auto flex h-4/5 w-full gap-1">
+            <div className="h-full w-1/4">
+              <div className="h-full w-full rounded-md border border-slate-800 p-1" ref={drop}>
+                <h2 className="mb-2 w-full pl-2 text-left text-sm text-slate-600 underline">Offen</h2>
+                <ul className="flex flex-col pl-2">{todos.map((todo: ITodo) => todo.planned_day === 'not_planned' && <Todo key={todo.id} todo={todo} />)}</ul>
+              </div>
+            </div>
+            <div className=" flex h-full w-full flex-col gap-1">
+              {weather && weekdays.map(day => <DayOfTheWeek key={day} weekday={day} weather={weather} />)}
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
