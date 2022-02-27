@@ -10,7 +10,7 @@ interface Props {
 
 export const CityListbox = ({ cityWeather, setCityWeather }: Props) => {
   return (
-    <div className="z-10 w-full">
+    <div className="z-10 w-36 text-gray-600">
       <Listbox value={cityWeather} onChange={setCityWeather}>
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full cursor-pointer rounded-md border border-slate-800 bg-transparent py-2 text-center shadow-md focus:outline-none sm:text-sm">

@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { supabase } from '../lib/initSupabase';
 import { Auth } from '@supabase/ui';
 import { TodoPlan } from '../components/TodoPlan';
 import { DateComponent } from '@/components/DateComponent';
-import { LogoutButton } from '@/components/LogoutButton';
+import { ICity } from 'src/types';
+import { cities } from '@/lib/Constants';
 
 export default function Home() {
   const { user } = Auth.useUser();
+  const [cityWeather, setCityWeather] = useState<ICity>(cities[0]);
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
@@ -14,10 +17,9 @@ export default function Home() {
           <Auth supabaseClient={supabase} socialLayout="horizontal" socialButtonSize="xlarge" />
         </div>
       ) : (
-        <div className="flex h-screen w-full flex-col items-center justify-center p-4">
-          <DateComponent />
-          <LogoutButton supabase={supabase} />
-          <TodoPlan user={supabase.auth.user()} />
+        <div className="flex h-screen w-screen flex-col items-center justify-center p-6">
+          <DateComponent cityWeather={cityWeather} setCityWeather={setCityWeather} />
+          <TodoPlan user={supabase.auth.user()} cityWeather={cityWeather} />
         </div>
       )}
     </div>

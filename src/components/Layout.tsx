@@ -30,7 +30,7 @@ export function Layout({ children }: Props) {
 
         <title>next-app</title>
       </Head>
-      <main className="w-screen bg-slate-900 text-gray-100">{children}</main>
+      <main className="w-screen border-gray-600 bg-gray-900 text-gray-300">{children}</main>
     </>
   );
 }

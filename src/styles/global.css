@@ -1,4 +1,3 @@
 @tailwind base;
 @tailwind components;
-@import './react-select-search.css';
 @tailwind utilities;

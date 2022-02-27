@@ -38,20 +38,20 @@ export const DayOfTheWeek = ({ weekday, weather }: Props) => {
   }, [weather, weekday]);
 
   return (
-    <div className="relative flex h-full w-full flex-col rounded-md border border-slate-800 p-1" ref={drop}>
-      <div className="mb-2 flex items-start justify-between">
-        <div className="absolute top-1 right-1 flex flex-col pr-2 text-right text-sm text-slate-600">
-          <h2 className="mb-2 w-full pl-2 text-left text-sm text-slate-600">{weatherState?.formatDate}</h2>
-          <div className="flex flex-row justify-end">
-            <div className={`-mr-1 ${weatherState?.temperature && parseInt(weatherState?.temperature) < 0 && 'text-red-600 opacity-100'}`}>
-              {weatherState?.temperature}
-            </div>
-            <div className="-mt-3 -mr-5">{weatherState?.weatherIcon}</div>
+    <div className="w-fulljustify-between relative flex h-full rounded-md border border-gray-700 p-1" ref={drop}>
+      <ul className="mr-56 flex flex-grow flex-col pl-2">
+        {todos.map((todo: ITodo) => todo.planned_day === weekday.toString() && <Todo key={todo.id} todo={todo} />)}
+      </ul>
+      <div className="flex h-full flex-col items-end pr-2 text-right text-sm">
+        <h2 className="mb-2 w-full pl-2 text-left">{weatherState?.formatDate}</h2>
+        <div className="flex flex-row justify-end">
+          <div className={`${weatherState?.temperature && parseInt(weatherState?.temperature) < 0 && 'text-red-600 opacity-100'}`}>
+            {weatherState?.temperature}
           </div>
-          <div className="-mt-3">{weatherState?.weatherDescription}</div>
+          <div className="">{weatherState?.weatherIcon}</div>
         </div>
+        <div className="">{weatherState?.weatherDescription}</div>
       </div>
-      <ul className="mr-56 flex flex-col pl-2">{todos.map((todo: ITodo) => todo.planned_day === weekday.toString() && <Todo key={todo.id} todo={todo} />)}</ul>
     </div>
   );
 };
