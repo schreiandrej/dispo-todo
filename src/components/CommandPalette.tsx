@@ -1,31 +1,33 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Combobox, Dialog, Transition } from '@headlessui/react';
 import { User } from '@supabase/supabase-js';
+import { searchForCurrentValue } from '@/lib/searchForCurrenValue';
+import { useTodos } from './Context';
+import { addTodo } from '@/lib/addTodo';
 
 interface Props {
   user: User | null;
 }
 
-const people = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' }
-];
-
 export const CommandPalette = ({ user }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState('');
+  const [combolist, setCombolist] = useState<any>(null);
   const [query, setQuery] = useState('');
+  const { todos, setTodos } = useTodos();
 
   function closeModal() {
     setIsOpen(false);
   }
 
-  const filteredPeople =
-    query === '' ? people : people.filter(person => person.name.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmit = (data: any) => {
+    setSelected(data);
+    if (data.length > 0) {
+      addTodo(data, todos, setTodos, user);
+    }
+    closeModal();
+  };
 
   useEffect(() => {
     function onKeyDown(event: any) {
@@ -65,14 +67,20 @@ export const CommandPalette = ({ user }: Props) => {
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block w-full max-w-xl transform rounded-2xl bg-white text-left align-middle shadow-xl ring-black/5 transition-all">
-                <Combobox value={selected} onChange={setSelected}>
+                <Combobox value={selected} onChange={data => onSubmit(data)}>
                   <div className="relative">
                     <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                       <Combobox.Input
                         className="w-full border-none py-2 pl-10 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
                         placeholder="Search..."
-                        displayValue={(person: any) => (person.name ? person.name : '')}
-                        onChange={event => setQuery(event.target.value)}
+                        autoFocus
+                        autoComplete="off"
+                        displayValue={(customer: any) => (customer.name ? customer.name : '')}
+                        onChange={async event => {
+                          setQuery(event.target.value);
+                          const data = await searchForCurrentValue(event.target.value);
+                          if (data) setCombolist(data);
+                        }}
                       />
                       <Combobox.Button className="absolute inset-y-0 left-2 flex items-center pr-2">
                         <SearchIcon />
@@ -89,22 +97,22 @@ export const CommandPalette = ({ user }: Props) => {
                         static
                         className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                       >
-                        {filteredPeople.length === 0 && query !== '' ? (
+                        {combolist?.length === 0 && query !== '' ? (
                           <div className="relative cursor-default select-none py-2 px-4 text-gray-700">Nothing found.</div>
                         ) : (
-                          filteredPeople.map(person => (
+                          combolist?.map((customer: any) => (
                             <Combobox.Option
-                              key={person.id}
+                              key={customer.value}
                               className={({ active }) =>
-                                `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-teal-600 text-white' : 'text-gray-900'}`
+                                `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-sky-600 text-white' : 'text-gray-900'}`
                               }
-                              value={person}
+                              value={customer.value}
                             >
                               {({ selected, active }) => (
                                 <>
-                                  <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{person.name}</span>
+                                  <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{customer.name}</span>
                                   {selected ? (
-                                    <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-teal-600'}`}>
+                                    <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-sky-800'}`}>
                                       <CheckIcon />
                                     </span>
                                   ) : null}

@@ -1,7 +1,6 @@
-import { SelectSearchOption } from 'react-select-search';
 import { supabase } from './initSupabase';
 
-export const searchForCurrentValue = async (query: string): Promise<SelectSearchOption[]> => {
+export const searchForCurrentValue = async (query: string): Promise<any> => {
   if (query.length < 1) return [];
 
   const typeCheck = parseInt(query);
