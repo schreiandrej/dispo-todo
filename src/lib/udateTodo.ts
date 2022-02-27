@@ -9,6 +9,6 @@ export const updateTodo = async (id: string, todos: ITodo[], setTodos: any, newT
   if (data) {
     console.log(data);
   } else {
-    console.log(error.message);
+    console.log(error?.message);
   }
 };
