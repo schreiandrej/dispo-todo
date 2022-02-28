@@ -27,7 +27,7 @@ export const Todo = ({ todo }: TodoProps) => {
       ref={drag}
     >
       <TodoPopover id={todo.id} todos={todos} setTodos={setTodos}>
-        <div className={`truncate text-sm`}>{todo.task}</div>
+        <div className={`truncate text-sm`}>{`${todo.task} ${todo?.additional_task_text ? `=> ${todo.additional_task_text}` : ''}`}</div>
       </TodoPopover>
     </li>
   );

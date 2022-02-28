@@ -17,9 +17,7 @@ export const TodoPopover = ({ children, id, todos, setTodos }: Props) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data: any) => {
-    const newTaskText = `${todos.filter(todo => todo.id === id)[0].task} => ${data.additionalText}`;
-    console.log(newTaskText);
-    await updateTodo(id, todos, setTodos, newTaskText);
+    if (data) await updateTodo(id, todos, setTodos, data.additionalText);
   };
 
   return (

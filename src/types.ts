@@ -2,7 +2,9 @@ export interface ITodo {
   id: string;
   user_id: string;
   task: string;
+  additional_task_text: string;
   planned_day: string;
+  category: string;
 }
 
 export interface IWeatherObject {
