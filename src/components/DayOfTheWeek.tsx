@@ -7,6 +7,7 @@ import { useTodos } from './Context';
 import { Todo } from './Todo';
 import { useEffect, useState } from 'react';
 import { getWeather } from '@/lib/getWeather';
+import { WeatherDisplay } from './WeatherDisplay';
 
 interface Props {
   weekday: number;
@@ -38,20 +39,11 @@ export const DayOfTheWeek = ({ weekday, weather }: Props) => {
   }, [weather, weekday]);
 
   return (
-    <div className="w-fulljustify-between relative flex h-full rounded-md border border-gray-700 p-1" ref={drop}>
-      <ul className="mr-56 flex flex-grow flex-col pl-2">
+    <div className="w-fulljustify-between relative flex h-full rounded-md border border-gray-800 p-1" ref={drop}>
+      <ul className="mr-56 flex flex-grow flex-col p-2">
         {todos.map((todo: ITodo) => todo.planned_day === weekday.toString() && <Todo key={todo.id} todo={todo} />)}
       </ul>
-      <div className="flex h-full flex-col items-end pr-2 text-right text-sm">
-        <h2 className="mb-2 w-full pl-2 text-left">{weatherState?.formatDate}</h2>
-        <div className="flex flex-row justify-end">
-          <div className={`${weatherState?.temperature && parseInt(weatherState?.temperature) < 0 && 'text-red-600 opacity-100'}`}>
-            {weatherState?.temperature}
-          </div>
-          <div className="">{weatherState?.weatherIcon}</div>
-        </div>
-        <div className="">{weatherState?.weatherDescription}</div>
-      </div>
+      <WeatherDisplay weatherState={weatherState} />
     </div>
   );
 };
