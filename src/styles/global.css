@@ -1,3 +1,56 @@
 @tailwind base;
+
+@import 'react-widgets/styles.css';
+
 @tailwind components;
+
+.rw-widget-picker {
+  display: grid;
+  overflow: hidden;
+  min-height: 38px;
+  background-color: rgb(30, 41, 59);
+  border: rgb(34, 34, 34) 1px solid;
+  border-radius: 4px;
+  outline: none;
+  grid-template: 1fr/1fr 1.9em;
+  width: 100%;
+}
+
+.rw-widget-input {
+  color: #c7c7c7;
+  background-color: rgb(30, 41, 59);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  background-clip: padding-box;
+  width: inherit;
+}
+
+.rw-widget-input:focus {
+  background-color: rgb(30, 41, 59);
+}
+
+.rw-widget-picker:focus {
+  border: rgb(34, 34, 34) 1px solid;
+}
+
+.rw-picker-btn {
+  color: #c7c7c7;
+}
+
+.rw-picker-btn:hover {
+  background-color: rgb(30, 41, 59);
+}
+.rw-picker-btn:active {
+  background-color: #dee2e6;
+}
+
+.rw-input-addon,
+.rw-input-addon.rw-picker-btn {
+  border-left: rgb(114, 114, 114) 1px solid;
+}
+[dir='rtl'] .rw-input-addon,
+[dir='rtl'] .rw-input-addon.rw-picker-btn {
+  border-right: #ccc 1px solid;
+  border-left: none;
+}
+
 @tailwind utilities;

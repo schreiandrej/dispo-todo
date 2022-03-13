@@ -1,4 +1,4 @@
-import { Dispatch, Fragment, ReactNode, SetStateAction } from 'react';
+import { Dispatch, Fragment, ReactNode, SetStateAction, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { deleteTodo } from '@/lib/deleteTodo';
 import { ITodo } from 'src/types';
@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { updateTodo } from '@/lib/updateTodo';
 import { CopyIcon, TrashIcon } from './SVG';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { DatepickerComponent } from './Datepicker';
 
 interface Props {
   children: ReactNode;
@@ -17,6 +18,7 @@ interface Props {
 
 export const TodoPopover = ({ children, id, customerID, todos, setTodos }: Props) => {
   const { register, handleSubmit } = useForm();
+  const [todoTimer, setTodoTimer] = useState(false);
 
   const onSubmit = async (data: any) => {
     if (data) await updateTodo(id, todos, setTodos, data.additionalText);
@@ -26,7 +28,7 @@ export const TodoPopover = ({ children, id, customerID, todos, setTodos }: Props
     <Popover className="relative">
       {({ open }) => (
         <>
-          <Popover.Button className="focus:outline-none">{children}</Popover.Button>
+          <Popover.Button className="w-full focus:outline-none">{children}</Popover.Button>
           <Transition
             as={Fragment}
             enter="transition ease-out duration-200"
@@ -38,32 +40,42 @@ export const TodoPopover = ({ children, id, customerID, todos, setTodos }: Props
           >
             <Popover.Panel className="absolute left-0 z-10 mt-3 w-96">
               {({ close }) => (
-                <div className="flex flex-row items-center overflow-hidden rounded-lg bg-slate-800 px-2 shadow-lg ring-1 ring-black ring-opacity-5">
-                  <form
-                    onSubmit={handleSubmit(data => {
-                      onSubmit(data);
-                      close();
-                    })}
-                    className="w-full"
-                  >
-                    <input
-                      type="text"
-                      className="w-full border-none bg-transparent focus:outline-none focus:ring-0"
-                      autoFocus
-                      autoComplete="off"
-                      {...register('additionalText')}
-                    />
-                  </form>
-                  <div className="flex flex-row gap-1">
-                    <CopyToClipboard text={customerID}>
-                      <button>
-                        <CopyIcon />
+                <div className="flex flex-col bg-black">
+                  <div className="flex flex-row items-center overflow-hidden rounded-lg bg-slate-800 px-2 shadow-lg ring-1 ring-black ring-opacity-5">
+                    <form
+                      onSubmit={handleSubmit(data => {
+                        onSubmit(data);
+                        close();
+                      })}
+                      className="w-full"
+                    >
+                      <input
+                        type="text"
+                        className="w-full border-none bg-transparent focus:outline-none focus:ring-0"
+                        autoFocus
+                        autoComplete="off"
+                        {...register('additionalText')}
+                      />
+                    </form>
+                    <div className="flex flex-row gap-1">
+                      <input
+                        className="focus:ring-none appearance-none rounded-sm border-gray-600 bg-transparent checked:bg-transparent hover:cursor-pointer hover:border-gray-200 checked:hover:bg-slate-500 focus:border-gray-600 focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-gray-500 checked:focus:bg-transparent"
+                        type="checkbox"
+                        name="reminder"
+                        checked={todoTimer}
+                        onChange={e => setTodoTimer((e.target as HTMLInputElement).checked)}
+                      />
+                      <CopyToClipboard text={customerID}>
+                        <button onClick={() => close()}>
+                          <CopyIcon />
+                        </button>
+                      </CopyToClipboard>
+                      <button className="" onClick={() => deleteTodo(id, todos, setTodos)}>
+                        <TrashIcon />
                       </button>
-                    </CopyToClipboard>
-                    <button className="" onClick={() => deleteTodo(id, todos, setTodos)}>
-                      <TrashIcon />
-                    </button>
+                    </div>
                   </div>
+                  {todoTimer && <DatepickerComponent />}
                 </div>
               )}
             </Popover.Panel>

@@ -30,13 +30,13 @@ export const Todo = ({ todo }: TodoProps) => {
   };
 
   return (
-    <li
-      className={`flex w-full cursor-pointer flex-row justify-between transition duration-150 ease-in-out focus:outline-none ${
-        isDragging ? 'opacity-30' : 'opacity-100'
-      }`}
-      ref={drag}
-    >
-      <TodoPopover id={todo.id} customerID={splitTask(todo.task).id} todos={todos} setTodos={setTodos}>
+    <TodoPopover id={todo.id} customerID={splitTask(todo.task).id} todos={todos} setTodos={setTodos}>
+      <li
+        className={`flex w-full cursor-pointer flex-row justify-between transition duration-150 ease-in-out hover:opacity-50 focus:outline-none ${
+          isDragging ? 'opacity-30' : 'opacity-100'
+        }`}
+        ref={drag}
+      >
         <div className={`text-md truncate`}>
           <span className="font-semibold">{splitTask(todo.task).customer}</span> <span className="text-sm text-gray-400">{splitTask(todo.task).city}</span>{' '}
           <span className="text-sm text-gray-400">{splitTask(todo.task).id}</span>
@@ -48,7 +48,7 @@ export const Todo = ({ todo }: TodoProps) => {
             ''
           )}
         </div>
-      </TodoPopover>
-    </li>
+      </li>
+    </TodoPopover>
   );
 };

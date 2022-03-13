@@ -47,7 +47,7 @@ export const TodoPlan = ({ user, cityWeather }: TodosProps) => {
     accept: ItemTypes.TASK,
     drop: async (item: { id: string; todos: ITodo[] }) => {
       try {
-        const { data, error } = await supabase.from(todoTable).update({ planned_day: null }).eq('id', item.id).single();
+        const { data, error } = await supabase.from<ITodo>(todoTable).update({ planned_day: null }).eq('id', item.id).single();
         if (error) {
           throw new Error(error.message);
         }
@@ -66,7 +66,7 @@ export const TodoPlan = ({ user, cityWeather }: TodosProps) => {
         {todos && (
           <div className="my-6 flex h-full w-full gap-1">
             <div className="h-full w-2/4 overflow-hidden rounded-md border border-gray-800 p-3" ref={drop}>
-              <ul className="flex w-full flex-col">{todos.map((todo: ITodo) => todo.planned_day === null && <Todo key={todo.id} todo={todo} />)}</ul>
+              <ul className="flex w-full flex-col gap-2">{todos.map((todo: ITodo) => todo.planned_day === null && <Todo key={todo.id} todo={todo} />)}</ul>
             </div>
             <div className=" flex h-full w-full flex-col gap-1">
               {weather && sortedWeekdays.map(day => <DayOfTheWeek key={day} weekday={day} weather={weather} />)}
