@@ -22,7 +22,11 @@ export const Todo = ({ todo }: TodoProps) => {
   const splitTask = (task: string) => {
     const items = task.replaceAll(' ', '').split(',');
 
-    return { id: items[0], customer: items[1], city: items[2] };
+    if (items.length > 1) {
+      return { id: items[0], customer: items[1], city: items[2] };
+    }
+
+    return { id: '', customer: items[0], city: '' };
   };
 
   return (
@@ -32,12 +36,13 @@ export const Todo = ({ todo }: TodoProps) => {
       }`}
       ref={drag}
     >
-      <TodoPopover id={todo.id} todos={todos} setTodos={setTodos}>
-        <div className={`truncate text-sm`}>
-          <span className="text-gray-500">{splitTask(todo.task).id}</span> <span className="">{splitTask(todo.task).customer}</span>
+      <TodoPopover id={todo.id} customerID={splitTask(todo.task).id} todos={todos} setTodos={setTodos}>
+        <div className={`text-md truncate`}>
+          <span className="font-semibold">{splitTask(todo.task).customer}</span> <span className="text-sm text-gray-400">{splitTask(todo.task).city}</span>{' '}
+          <span className="text-sm text-gray-400">{splitTask(todo.task).id}</span>
           {todo?.additional_task_text ? (
             <span>
-              <span className="text-gray-500">{' => '}</span> <span>{todo.additional_task_text}</span>
+              <span className="text-gray-400">{' => '}</span> <span>{todo.additional_task_text}</span>
             </span>
           ) : (
             ''

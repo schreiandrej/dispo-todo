@@ -3,17 +3,19 @@ import { Popover, Transition } from '@headlessui/react';
 import { deleteTodo } from '@/lib/deleteTodo';
 import { ITodo } from 'src/types';
 import { useForm } from 'react-hook-form';
-import { updateTodo } from '@/lib/udateTodo';
-import { TrashIcon } from './SVG';
+import { updateTodo } from '@/lib/updateTodo';
+import { CopyIcon, TrashIcon } from './SVG';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 interface Props {
   children: ReactNode;
   id: string;
+  customerID: string;
   todos: ITodo[];
   setTodos: Dispatch<SetStateAction<ITodo[]>>;
 }
 
-export const TodoPopover = ({ children, id, todos, setTodos }: Props) => {
+export const TodoPopover = ({ children, id, customerID, todos, setTodos }: Props) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data: any) => {
@@ -52,9 +54,16 @@ export const TodoPopover = ({ children, id, todos, setTodos }: Props) => {
                       {...register('additionalText')}
                     />
                   </form>
-                  <button className="" onClick={() => deleteTodo(id, todos, setTodos)}>
-                    <TrashIcon />
-                  </button>
+                  <div className="flex flex-row gap-1">
+                    <CopyToClipboard text={customerID}>
+                      <button>
+                        <CopyIcon />
+                      </button>
+                    </CopyToClipboard>
+                    <button className="" onClick={() => deleteTodo(id, todos, setTodos)}>
+                      <TrashIcon />
+                    </button>
+                  </div>
                 </div>
               )}
             </Popover.Panel>

@@ -28,6 +28,7 @@ export const TodoPlan = ({ user, cityWeather }: TodosProps) => {
     (async () => {
       const data = await fetchTodos();
       data && setTodos(data);
+      console.log(data);
     })();
 
     const today = getDay(new Date());
